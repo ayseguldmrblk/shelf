@@ -1,0 +1,54 @@
+.Members{
+    background: #9ad9ea;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top:4%;
+    margin-left:10%;
+    border-radius: 3%;
+    height: 60%;
+    width: 80%;
+}
+
+.MembersList{
+    text-align: left;
+    padding: 5%;
+    height:80%;
+    width: 96%;
+    margin:unset;
+    position: fixed;
+}
+
+.MembersListElement{
+    background-color: #35a2e5;
+    text-align: left;
+    font-size: xx-large;
+    border-radius: 1rem;
+    margin: 2%;
+    padding: 0.75%;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.header{
+    color: #0055ff;
+    margin-left: 2%;
+    font-size: xx-large;
+}
+
+.userInfo{
+    font-size: xx-large;
+    background-color: #35a2e5;
+    border-radius: 1rem;
+    width: 60%;
+    margin: auto;
+}
+
+.buttonVis{
+    background-color: rgb(65, 63, 226);
+    position: fixed;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    position: absolute;
+    right: 24%;
+}

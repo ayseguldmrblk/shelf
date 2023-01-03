@@ -1,0 +1,50 @@
+.Sidebar{
+	background-color: #9ad9ea;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	padding-top: 32%;
+	transition: all 300ms ease;
+}
+
+.logo{
+	display: flex;
+	font-weight: bold;
+	height: 4%;
+	align-items: center;
+	justify-content: center;
+}
+
+.logo>img{
+	height: 400%;
+}
+
+.menuItem {
+	display: flex;
+	align-items: center;
+	gap: 4%;
+	margin-top: 45%;
+	height: 5%;
+	margin-left: 3%;
+	position: relative;
+	transition: all 300ms ease;
+	border-radius: 10%;
+	font-weight: bold;
+  }
+
+.menuItem:hover{
+	cursor: pointer
+}
+
+.active{
+	margin-left: 0;
+	background: #35a2e5;
+}
+
+.active::before{
+	content: '';
+	width: 5%;
+	height: 100%;
+	background: #0055ff;
+	margin-right: calc(1rem - 8px);
+}
