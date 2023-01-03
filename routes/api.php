@@ -35,17 +35,17 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('/authors', [AuthorController::class, 'getAuthors'])->middleware('guest');
 Route::post('/authors/add', [AuthorController::class, 'add'])->middleware(['auth:sanctum','admin']);
-Route::delete('/authors/{id}', [AuthorController::class, 'delete'])->middleware(['auth:sanctum','admin']);
+Route::get('/authors/{id}/delete', [AuthorController::class, 'delete'])->middleware(['auth:sanctum','admin']);
 
 Route::get('/categories', [CategoryController::class, 'getCategories'])->middleware('guest');
 Route::post('/category/add', [CategoryController::class, 'add'])->middleware(['auth:sanctum','admin']);
-Route::delete('/category/{id}', [CategoryController::class, 'delete'])->middleware(['auth:sanctum','admin']);
+Route::get('/category/{id}/delete', [CategoryController::class, 'delete'])->middleware(['auth:sanctum','admin']);
 
 Route::get('/books', [BookController::class, 'getBooks'])->middleware('guest');
 Route::get('/books/{id}', [BookController::class, 'getBook'])->middleware('guest');
 Route::put('/books/{id}', [BookController::class, 'update'])->middleware('guest');
 Route::post('/books/add', [BookController::class, 'add'])->middleware('guest');
-Route::delete('/books/{id}', [BookController::class, 'delete'])->middleware('guest');
+Route::get('/books/{id}/delete', [BookController::class, 'delete'])->middleware('guest');
 
 Route::get('/cart', [CartController::class, 'getCart'])->middleware('auth:sanctum');
 Route::post('/cart/add', [CartController::class, 'add'])->middleware('auth:sanctum');
@@ -54,11 +54,11 @@ Route::get('/order-right', [CartController::class, 'checkRight'])->middleware('a
 
 Route::get('/favorites', [FavoriteController::class, 'getFavorites'])->middleware('auth:sanctum');
 Route::post('/favorites/add', [FavoriteController::class, 'add'])->middleware('auth:sanctum');
-Route::delete('/favorites/{id}', [FavoriteController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('/favorites/{id}/delete', [FavoriteController::class, 'delete'])->middleware('auth:sanctum');
 
 Route::get('/addresses', [AddressController::class, 'getAddresses'])->middleware('auth:sanctum');
 Route::post('/addresses/add', [AddressController::class, 'add'])->middleware('auth:sanctum');
-Route::delete('/addresses/{id}', [AddressController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('/addresses/{id}/delete', [AddressController::class, 'delete'])->middleware('auth:sanctum');
 
 
 Route::post('/order/create', [OrderController::class, 'createOrder'])->middleware('auth:sanctum');
