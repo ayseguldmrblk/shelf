@@ -16,7 +16,6 @@ class ReviewController extends Controller
         JSON_UNESCAPED_UNICODE);
     }
 
-
     public function add(Request $request)
     {
         $review = new Review;

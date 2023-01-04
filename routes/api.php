@@ -69,3 +69,7 @@ Route::get('user/{id}/reviews', [ReviewController::class, 'reviews'])->middlewar
 Route::get('user/{id}/delete', [AuthController::class, 'delete'])->middleware('guest');
 
 Route::post('review/add', [ReviewController::class, 'add'])->middleware('auth:sanctum');
+Route::get('review/{id}/delete', [ReviewController::class, 'add'])->middleware('auth:sanctum');
+
+Route::post('report/add', [ReportController::class, 'add'])->middleware('auth:sanctum');
+Route::get('reports', [ReportController::class, 'reports'])->middleware('auth:sanctum');
