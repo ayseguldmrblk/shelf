@@ -149,11 +149,44 @@ class AuthController extends Controller
         Address::where('user_id', $id)->delete();
     }
 
+    public function update($id,Request $request)
+    {
+       $user = User::where('id', $id)->first();
+       $user->name = $request->name;
+       $user->password = bcrypt($request->password);
+       $user->email = $request->email;
+       $user->save();
+       return response()->json($user, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+    }
+
     public function users()
     {
         $users = User::get();
         return response()->json($users, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
         JSON_UNESCAPED_UNICODE);
+    }
+
+    public function setAdmin(Request $request)
+    {
+        $user = User::where('id', $request->user_id)->first();
+        if($user->is_superuser==1){
+            $user->is_superuser=0;
+        }else{
+            $user->is_superuser=1;
+        }
+        $user->save();
+    }
+
+    public function setManager(Request $request)
+    {
+        $user = User::where('id', $request->user_id)->first();
+        if($user->is_manager==1){
+            $user->is_manager=0;
+        }else{
+            $user->is_manager=1;
+        }
+        $user->save();
     }
 
 }

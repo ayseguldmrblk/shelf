@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('order_id');
             $table->integer('sender_id');
             $table->string('shipping_key')->nullable();
+            $table->string('delivery_status')->nullable();
+            $table->string('tracking_code')->nullable();
             $table->timestamps();
         });
     }

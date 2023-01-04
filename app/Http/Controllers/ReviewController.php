@@ -16,6 +16,7 @@ class ReviewController extends Controller
         JSON_UNESCAPED_UNICODE);
     }
 
+
     public function add(Request $request)
     {
         $review = new Review;
@@ -26,5 +27,10 @@ class ReviewController extends Controller
         $review->save();
         return response()->json($review, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
         JSON_UNESCAPED_UNICODE);
+    }
+
+    public function delete($id)
+    {
+        Review::where('id',$id)->delete();
     }
 }

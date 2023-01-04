@@ -102,4 +102,24 @@ class OrderController extends Controller
         return response()->json($sales, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
         JSON_UNESCAPED_UNICODE);
     }
+
+    public function updateDeliveryStatus(Request $request)
+    {
+        $sale = Sale::where('id', $request->sale_id)->first();
+        $sale->delivery_status = $request->delivery_status;
+        $sale->save();
+
+        return response()->json($sale, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+    }
+
+    public function updateTrackingCode(Request $request)
+    {
+        $sale = Sale::where('id', $request->sale_id)->first();
+        $sale->tracking_code = $request->tracking_code;
+        $sale->save();
+
+        return response()->json($sale, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+    }
 }

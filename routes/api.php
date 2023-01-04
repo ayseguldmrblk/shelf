@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReportController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,7 @@ Route::get('/books/{id}/delete', [BookController::class, 'delete'])->middleware(
 
 Route::get('/cart', [CartController::class, 'getCart'])->middleware('auth:sanctum');
 Route::post('/cart/add', [CartController::class, 'add'])->middleware('auth:sanctum');
-Route::delete('/cart/{id}', [CartController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('/cart/{id}/delete', [CartController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('/order-right', [CartController::class, 'checkRight'])->middleware('auth:sanctum');
 
 Route::get('/favorites', [FavoriteController::class, 'getFavorites'])->middleware('auth:sanctum');
@@ -60,16 +61,21 @@ Route::get('/addresses', [AddressController::class, 'getAddresses'])->middleware
 Route::post('/addresses/add', [AddressController::class, 'add'])->middleware('auth:sanctum');
 Route::get('/addresses/{id}/delete', [AddressController::class, 'delete'])->middleware('auth:sanctum');
 
-
 Route::post('/order/create', [OrderController::class, 'createOrder'])->middleware('auth:sanctum');
 Route::get('/orders', [OrderController::class, 'orders'])->middleware('auth:sanctum');
 Route::get('/sales', [OrderController::class, 'sales'])->middleware('auth:sanctum');
+Route::post('/sale/update/delivery-status', [OrderController::class, 'updateDeliveryStatus'])->middleware('guest');
+Route::post('/sale/update/tracking-code', [OrderController::class, 'updateTrackingCode'])->middleware('guest');
 
 Route::get('user/{id}/reviews', [ReviewController::class, 'reviews'])->middleware('guest');
 Route::get('user/{id}/delete', [AuthController::class, 'delete'])->middleware('guest');
+Route::put('user/{id}/update', [AuthController::class, 'update'])->middleware('guest');
+Route::post('user/set-superuser', [AuthController::class, 'setAdmin'])->middleware('guest');
+Route::post('user/set-manager', [AuthController::class, 'setManager'])->middleware('guest');
 
 Route::post('review/add', [ReviewController::class, 'add'])->middleware('auth:sanctum');
-Route::get('review/{id}/delete', [ReviewController::class, 'add'])->middleware('auth:sanctum');
+Route::post('review/{id}/delete', [ReviewController::class, 'delete'])->middleware('auth:sanctum');
 
-Route::post('report/add', [ReportController::class, 'add'])->middleware('auth:sanctum');
-Route::get('reports', [ReportController::class, 'reports'])->middleware('auth:sanctum');
+Route::get('/reports', [ReportController::class, 'getReports'])->middleware('guest');
+Route::get('/reports/add', [ReportController::class, 'add'])->middleware('guest');
+Route::get('/reports/{id}/delete', [ReportController::class, 'add'])->middleware('guest');
