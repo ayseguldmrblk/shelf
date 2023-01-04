@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function books()
     {
-        return $this->hasMany(Books::class, 'donor', 'id');
+        return $this->hasMany(Book::class, 'donor', 'id');
     }
 
     public function addresses()

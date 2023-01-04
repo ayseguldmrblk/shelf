@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Address;
+use App\Models\City;
+use App\Models\Town;
 
 class AddressController extends Controller
 {
@@ -21,10 +23,12 @@ class AddressController extends Controller
     {
         $address = new Address;
         $address->user_id=auth()->user()->id;
-        $address->name=$request->name;
-        $address->province=$request->province;
-        $address->district=$request->district;
-        $address->street=$request->street;
+        $address->address_name=$request->address_name;
+        $address->receiver_name=$request->receiver_name;
+        $address->phone=$request->phone;
+        $address->address=$request->address;
+        $address->city=$request->city;
+        $address->town=$request->town;
         $address->save();
 
         return response()->json($address, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
@@ -35,6 +39,20 @@ class AddressController extends Controller
     {
         $address = Address::where('id', $id);
         $address->delete();
+    }
+
+    public function getCities()
+    {
+        $cities = City::get();
+        return response()->json($cities, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getTowns(Request $request)
+    {
+        $cities = Town::where('il', $request->city)->get();
+        return response()->json($cities, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
     }
 
 }

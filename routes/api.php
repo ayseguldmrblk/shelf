@@ -29,6 +29,8 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 Route::post('/verify-email', [AuthController::class, 'confirmCode'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/users', [AuthController::class, 'users'])->middleware('guest');
+Route::post('/password-reset', [AuthController::class, 'resetPassword'])->middleware('guest');
+Route::post('/change-password', [AuthController::class, 'setPassword'])->middleware('guest');
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();

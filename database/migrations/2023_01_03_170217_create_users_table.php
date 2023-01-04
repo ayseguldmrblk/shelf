@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('is_manager')->default(false);
             $table->boolean('is_superuser')->default(false);
             $table->string('name');
+            $table->string('phone')->nullable();
             $table->string('email');
             $table->string('verification_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();

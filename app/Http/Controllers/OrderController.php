@@ -36,6 +36,10 @@ class OrderController extends Controller
             // }
         }
 
+        if(count($user->carts)==0){
+            return;
+        }
+
         $order = New Order;
         $order->user_id = $user->id;
         $order->address = json_encode(Address::where('id', $request->address_id)->first());
@@ -86,8 +90,9 @@ class OrderController extends Controller
     {
         $orders = Order::where('user_id', auth()->user()->id)->get();
         foreach($orders as $order){
-            $sale_ids=Sale::where('order_id', $order->id)->pluck('id')->toArray();
-            $order->books=OrderDetail::whereIn('sale_id', $sale_ids)->get('book');
+
+            $order->details=Sale::with('books')->where('order_id', $order->id)->get();
+
         }
 
         return response()->json($orders, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],

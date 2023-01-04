@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Address;
+use App\Models\PasswordReset;
 use Hash;
 use Illuminate\Support\Str;
 
@@ -177,6 +178,43 @@ class AuthController extends Controller
         }
         $user->save();
     }
+
+    public function resetPassword(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if($user){
+            $reset = new ResetPassword;
+            $reset->email = $request->email;
+            $reset->token = "123456";
+            return response()->json(['status'=>true, 'user_id'=>$user->id], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+        }else{
+            return response()->json(['status'=>false, 'user_id'=>0], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    public function setPassword(Request $request)
+    {
+        $user = User::where('id', $request->user_id)->where('email_verified_at', '!=', null)->first();
+        if(!$user){
+            return response()->json(['status'=>false, 'message'=> 'Verified user not found'], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE);
+        }
+
+            $token = ResetPassword::where('email', $user->email)->last();
+            if($request->reset_code==$token->token){
+                $user->password = bcrypt($request->password);
+                $user->save();
+                return response()->json(['status'=>true, 'message'=> 'Successfully'], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE);
+            }else{
+                return response()->json(['status'=>false, 'message'=> 'The entered code is incorrect'], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE);
+            }
+
+    }
+
 
     public function setManager(Request $request)
     {
