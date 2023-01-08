@@ -4,6 +4,7 @@
     font-family: 'Inter', sans-serif;
     justify-content: center;
     align-items: center;
+    background-color: #cce6f7;
 }
 
 .AppGlass{
@@ -14,4 +15,64 @@
     border-radius: 2rem;
     overflow: hidden;
     grid-template-columns: 12% auto;
+}
+
+.auth-form-container, .login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup{
+    position: fixed;
+    margin-top:2%;
+    margin-left:5%;
+    background-color: rgb(177, 175, 218);
+    border-radius: 6px;
+    text-align: center;
+    color:red;
+}
+
+.popup_login{
+    position: fixed;
+    margin-top:30%;
+    background-color: rgb(177, 175, 218);
+    border-radius: 6px;
+    text-align: center;
+    color:red;
+}
+
+@media screen and (min-width: 600px) {
+.auth-form-container {
+    padding: 5rem;
+    border: 5px solid rgb(122, 134, 211);
+    border-radius: 10px;
+    margin: 0.5rem;
+}
+}
+
+label {
+    text-align: left;
+    padding: 0.25rem 0;
+}
+
+input {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 10px;
+}
+
+button {
+    border: none;
+    background-color: #91c8ed;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #7439db;
+}
+
+.link-btn {
+    background: none;
+    color: white;
+    text-decoration: underline;
 }

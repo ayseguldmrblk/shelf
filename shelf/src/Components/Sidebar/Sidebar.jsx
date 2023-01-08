@@ -7,12 +7,14 @@ import './Sidebar.css'
 
 function Sidebar( {setSelected2} ) {
 
-
+    function logOut(){
+        
+    }
     const [selected , setSelected] = useState(0);
     return (
         <div className="Sidebar">
             <div className="logo">
-                <img src={'dist/'+Logo} alt="" />
+                <img src={Logo} alt="" />              
             </div>
 
             <div>
@@ -22,9 +24,14 @@ function Sidebar( {setSelected2} ) {
                             key={index}
                             onClick={
                                 ()=> {setSelected(index)
-                                      setSelected2(index)}
+                                      setSelected2(index)
+                                      if (index === 5) {
+                                        window.location.reload(false)
+                                        logOut();
+                                      }
+                                    }
                             }>
-
+  
                             <item.icon/>
                             <span>
                                 {item.heading}

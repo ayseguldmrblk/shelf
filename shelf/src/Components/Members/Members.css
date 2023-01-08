@@ -1,7 +1,5 @@
 .Members{
     background: #9ad9ea;
-    display: flex;
-    flex-direction: column;
     justify-content: space-evenly;
     margin-top:4%;
     margin-left:10%;
@@ -12,7 +10,7 @@
 
 .MembersList{
     text-align: left;
-    padding: 5%;
+    padding: 3%;
     height:80%;
     width: 96%;
     margin:unset;
@@ -20,35 +18,55 @@
 }
 
 .MembersListElement{
-    background-color: #35a2e5;
+    background-color: #cce6f7;
     text-align: left;
-    font-size: xx-large;
-    border-radius: 1rem;
+    font-size: large;
+    border-radius: 0.8rem;
     margin: 2%;
-    padding: 0.75%;
+    padding: 0.5%;
     list-style-type: none;
     cursor: pointer;
 }
 
-.header{
-    color: #0055ff;
-    margin-left: 2%;
-    font-size: xx-large;
+.MembersListElement:hover{
+	cursor: pointer
 }
+
+.page{
+    background-color: #cce6f7;
+    text-align: center;
+    font-size: large;
+    border-radius: 1rem;
+    padding: 0.10%;
+    cursor: pointer;
+    position: fixed;
+    left: 53.8%;
+    top:  78%;
+}
+
 
 .userInfo{
     font-size: xx-large;
-    background-color: #35a2e5;
-    border-radius: 1rem;
-    width: 60%;
-    margin: auto;
+    background-color: #cce6f7;
+    border-radius: 2%;
+    position: fixed;
+    top:35%;
+    width: 35%;
+    left:38%
 }
 
 .buttonVis{
-    background-color: rgb(65, 63, 226);
     position: fixed;
     border-radius: 0.5rem;
     cursor: pointer;
     position: absolute;
     right: 24%;
+}
+
+.popup{
+    border-width: 2px;
+    position: fixed;
+    top: 42%;
+    left: 36%;
+    border-color: black;
 }

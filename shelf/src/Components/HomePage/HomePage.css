@@ -1,6 +1,5 @@
 .HomePage{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }

@@ -38,13 +38,13 @@
 
 .active{
 	margin-left: 0;
-	background: #35a2e5;
+	background: #6dbef0;
 }
 
 .active::before{
 	content: '';
 	width: 5%;
 	height: 100%;
-	background: #0055ff;
+	background: #6598ff;
 	margin-right: calc(1rem - 8px);
 }
