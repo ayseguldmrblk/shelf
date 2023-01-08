@@ -37,12 +37,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::get('/authors', [AuthorController::class, 'getAuthors'])->middleware('guest');
-Route::post('/authors/add', [AuthorController::class, 'add'])->middleware(['auth:sanctum','admin']);
-Route::get('/authors/{id}/delete', [AuthorController::class, 'delete'])->middleware(['auth:sanctum','admin']);
+Route::post('/authors/add', [AuthorController::class, 'add'])->middleware('guest');
+Route::get('/authors/{id}/delete', [AuthorController::class, 'delete'])->middleware('guest');
 
 Route::get('/categories', [CategoryController::class, 'getCategories'])->middleware('guest');
-Route::post('/category/add', [CategoryController::class, 'add'])->middleware(['auth:sanctum','admin']);
-Route::get('/category/{id}/delete', [CategoryController::class, 'delete'])->middleware(['auth:sanctum','admin']);
+Route::post('/category/add', [CategoryController::class, 'add'])->middleware('guest');
+Route::get('/category/{id}/delete', [CategoryController::class, 'delete'])->middleware('guest');
 
 Route::get('/books', [BookController::class, 'getBooks'])->middleware('guest');
 Route::get('/books/{id}', [BookController::class, 'getBook'])->middleware('guest');
@@ -69,6 +69,7 @@ Route::get('/sales', [OrderController::class, 'sales'])->middleware('auth:sanctu
 Route::post('/sale/update/delivery-status', [OrderController::class, 'updateDeliveryStatus'])->middleware('guest');
 Route::post('/sale/update/tracking-code', [OrderController::class, 'updateTrackingCode'])->middleware('guest');
 
+Route::get('user/{id}', [AuthController::class, 'user'])->middleware('guest');
 Route::get('user/{id}/reviews', [ReviewController::class, 'reviews'])->middleware('guest');
 Route::get('user/{id}/delete', [AuthController::class, 'delete'])->middleware('guest');
 Route::put('user/{id}/update', [AuthController::class, 'update'])->middleware('guest');
@@ -76,8 +77,8 @@ Route::post('user/set-superuser', [AuthController::class, 'setAdmin'])->middlewa
 Route::post('user/set-manager', [AuthController::class, 'setManager'])->middleware('guest');
 
 Route::post('review/add', [ReviewController::class, 'add'])->middleware('auth:sanctum');
-Route::post('review/{id}/delete', [ReviewController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('review/{id}/delete', [ReviewController::class, 'delete'])->middleware('auth:sanctum');
 
 Route::get('/reports', [ReportController::class, 'getReports'])->middleware('guest');
-Route::get('/reports/add', [ReportController::class, 'add'])->middleware('guest');
+Route::post('/reports/add', [ReportController::class, 'add'])->middleware('auth:sanctum');
 Route::get('/reports/{id}/delete', [ReportController::class, 'add'])->middleware('guest');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Category;
+use App\Models\Book;
 
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -33,6 +34,7 @@ class CategoryController extends Controller
     {
         $category = Category::where('id', $id);
         $category->delete();
+        Book::where('category', $id)->delete();
     }
 
     public function uploadImage($file)

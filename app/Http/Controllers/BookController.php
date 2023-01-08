@@ -40,8 +40,8 @@ class BookController extends Controller
             $books->where('books.name', 'like', '%'.$request->name.'%');
         }
 
-        if($request->has('shipping_type') && $request->shipping_type!=""){
-            $books->where('books.shipping_type', $request->shipping_type);
+        if($request->has('shipment_type') && $request->shipment_type!=""){
+            $books->where('books.shipment_type', $request->shipment_type);
         }
 
         $books = $books->get(['books.*', 'authors.name as author', 'categories.name as category']);
@@ -68,6 +68,8 @@ class BookController extends Controller
         $book->abstract = $request->abstract;
         $book->author = $request->author;
         $book->category = $request->category;
+        $book->shipment_type = $request->shipment_type;
+        $book->page_count = $request->page_count;
 
         if($request->image1!=""){
             $book->image1= $this->uploadImage($request->image1);
@@ -101,6 +103,8 @@ class BookController extends Controller
         $book->abstract = $request->abstract;
         $book->author = $request->author;
         $book->category = $request->category;
+        $book->shipment_type = $request->shipment_type;
+        $book->page_count = $request->page_count;
         if($request->image1!=""){
             $book->image1= $this->uploadImage($request->image1);
         }

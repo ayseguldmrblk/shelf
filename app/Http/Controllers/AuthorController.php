@@ -41,5 +41,6 @@ class AuthorController extends Controller
     {
         $author = Author::where('id', $id);
         $author->delete();
+        Book::where('author', $id)->delete();
     }
 }

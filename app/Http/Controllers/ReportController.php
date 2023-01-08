@@ -23,7 +23,7 @@ class ReportController extends Controller
     public function add(Request $request)
     {
        $report = new Report;
-       $report->user_id = $request->user_id;
+       $report->user_id = auth()->user()->id;
        $report->message = $request->message;
        $report->save();
        return response()->json($report, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],

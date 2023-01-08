@@ -13,6 +13,7 @@ use App\Models\Address;
 use App\Models\PasswordReset;
 use Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,7 @@ class AuthController extends Controller
             $user = new User([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone' => $request->phone,
                 'password' => bcrypt($request->password),
             ]);
 
@@ -70,6 +72,12 @@ class AuthController extends Controller
     public function confirmCode(Request $request)
     {
         $user = User::where('id', $request->user_id)->first();
+        if($user->email_verified_at!=null){
+            return response()->json([
+                'result' => true,
+                'message' => 'Your account is already verified.Please login',
+            ], 200);
+        }
 
         if ($user->verification_code == $request->verification_code) {
             $user->email_verified_at = date('Y-m-d H:i:s');
@@ -89,7 +97,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->orWhere('phone', $request->email)->first();
 
         if ($user != null) {
             if (Hash::check($request->password, $user->password)) {
@@ -106,9 +114,11 @@ class AuthController extends Controller
         }
     }
 
-    public function user(Request $request)
+    public function user($id)
     {
-        return response()->json($request->user());
+        $user = User::with(['reviews', 'books'])->find($id);
+        return response()->json($user, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
     }
 
     public function logout(Request $request)
@@ -139,6 +149,7 @@ class AuthController extends Controller
                 'is_superuser' => $user->is_superuser,
                 'name' => $user->name,
                 'email' => $user->email,
+                'phone' => $user->phone,
             ]
         ]);
     }
@@ -152,10 +163,29 @@ class AuthController extends Controller
 
     public function update($id,Request $request)
     {
+
        $user = User::where('id', $id)->first();
+        if($user==null){
+            return response()->json([
+                'result' => false,
+                'message' => 'User not found',
+                'user_id' => 0
+            ], 201);
+        }
+       if($user->email != $request->email){
+        if (User::where('email', $request->email)->first() != null) {
+            return response()->json([
+                'result' => false,
+                'message' => 'Email already exists. Try another email.',
+                'user_id' => 0
+            ], 201);
+        }
+       }
+
        $user->name = $request->name;
        $user->password = bcrypt($request->password);
        $user->email = $request->email;
+       $user->phone = $request->phone;
        $user->save();
        return response()->json($user, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
         JSON_UNESCAPED_UNICODE);
@@ -163,7 +193,7 @@ class AuthController extends Controller
 
     public function users()
     {
-        $users = User::get();
+        $users = User::with('reviews')->orderBy('id', 'desc')->get();
         return response()->json($users, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
         JSON_UNESCAPED_UNICODE);
     }
@@ -183,9 +213,9 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
         if($user){
-            $reset = new ResetPassword;
-            $reset->email = $request->email;
-            $reset->token = "123456";
+
+            $user->verification_code = "123456";
+            $user->save();
             return response()->json(['status'=>true, 'user_id'=>$user->id], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
         JSON_UNESCAPED_UNICODE);
         }else{
@@ -202,8 +232,8 @@ class AuthController extends Controller
             JSON_UNESCAPED_UNICODE);
         }
 
-            $token = ResetPassword::where('email', $user->email)->last();
-            if($request->reset_code==$token->token){
+
+            if($request->reset_code==$user->verification_code){
                 $user->password = bcrypt($request->password);
                 $user->save();
                 return response()->json(['status'=>true, 'message'=> 'Successfully'], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
